@@ -1,0 +1,55 @@
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/zH17BK2a", true))()
+local example = library:CreateWindow({
+  text = "Coordinates Grabber"
+})
+local Character = game:GetService("Players").LocalPlayer.Character or game:GetService("Players").LocalPlayer.CharacterAdded:Wait()
+
+example:AddLabel("Which part?")
+example:AddDropdown({"Head", "UpperTorso", "LowerTorso", "HumanoidRootPart","RightArm","LeftArm","RightFoot","LeftFoot"}, function(Property)
+Property2 = Property
+    if Property == "Head" then
+       PropertyChosen = Character:findFirstChild("Head")
+    elseif Property == "UpperTorso" then
+        PropertyChosen = Character:findFirstChild("UpperTorso")
+    elseif Property == "LowerTorso" then
+        PropertyChosen = Character:findFirstChild("LowerTorso")
+    elseif Property == "HumanoidRootPart" then
+        PropertyChosen = Character:findFirstChild("HumanoidRootPart")
+    elseif Property == "RightArm" then
+        PropertyChosen = Character:findFirstChild("RightUpperArm")
+    elseif Property == "LeftArm" then
+        PropertyChosen = Character:findFirstChild("LeftUpperArm")
+    elseif Property == "RightFoot" then
+        PropertyChosen = Character:findFirstChild("RightFoot")
+    elseif Property == "LeftFoot" then
+        PropertyChosen = Character:findFirstChild("LeftFoot")
+    end
+end)
+
+example:AddLabel("What Method?")
+example:AddDropdown({"CFrame", "Position"}, function(CFrameorPosition)
+    if CFrameorPosition == "CFrame" then
+       PropertyChosen1 = CFrameorPosition
+    elseif CFrameorPosition == "Position" then
+        PropertyChosen1 = CFrameorPosition
+    end
+end)
+
+example:AddButton("Copy Coordinates", function()
+        if PropertyChosen1 == "CFrame" then
+           setclipboard(tostring(PropertyChosen.CFrame)) 
+        elseif PropertyChosen1 == "Position" then
+           setclipboard(tostring(PropertyChosen.Position))
+	end
+end)
+
+example:AddButton("Save Coordinates", function()
+    getgenv().SavedCoordinates = Character[Property2].Position
+end)
+
+example:AddButton("Load Coordinates", function()
+    Character.HumanoidRootPart.CFrame = CFrame.new(getgenv().SavedCoordinates)
+end)
+
+example:AddLabel("")
+example:AddLabel("Made by Vanis#4491/0001")
